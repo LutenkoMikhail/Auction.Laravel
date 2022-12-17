@@ -10,8 +10,8 @@ trait LotRulesTrait
      * @var mixed
      */
     protected static $RULES = [
-        'name' => ['required', 'max:50'],
-        'description' => ['required', 'max:100'],
+        'name' => ['required', 'min:5', 'max:50'],
+        'description' => ['required', 'min:5', 'max:100'],
         'category_id' => ['unique:categories,id', 'array'],
     ];
 }

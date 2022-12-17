@@ -8,7 +8,7 @@ return [
         ],
         'paginate_categories' => [
             'paginate_category_3' => 3,
-            'paginate_category_10' => 10,
+            'paginate_category_9' => 9,
             'paginate_category_25' => 25,
         ],
     ],

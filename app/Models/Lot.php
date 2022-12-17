@@ -47,7 +47,6 @@ class Lot extends Model
         } else {
             return false;
         }
-
     }
 
     /**
@@ -103,6 +102,7 @@ class Lot extends Model
             $lot->categories()->attach($request->categories);
             $message = 'Lot created';
         }
+
         return $message;
     }
 
