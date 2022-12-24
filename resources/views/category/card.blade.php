@@ -1,4 +1,4 @@
-<div class="col-sm-6 col-md-4">
+<div class="col-sm-6 col-md-6">
     <div class="thumbnail">
         <div class="caption">
             <p>{{$category->name}}</p>
@@ -17,7 +17,6 @@
                     @include('category.button.delete')
                 @endif
             </div>
-
         </div>
     </div>
 </div>

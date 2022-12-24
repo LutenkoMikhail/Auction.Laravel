@@ -27,7 +27,6 @@
                         @include('category.button.save')
                         @include('category.button.back')
                     </div>
-
                 </form>
             </div>
         </div>

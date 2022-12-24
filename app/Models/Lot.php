@@ -126,4 +126,19 @@ class Lot extends Model
         return $message;
     }
 
+    /**
+     * @param $categoryId
+     * @param $paginate
+     * @return mixed
+     */
+    static public function searchLot($categoryId, $paginate)
+    {
+        Lot::$paginate = $paginate;
+
+        return Lot::when($categoryId, function (Builder $query, $categoryId) {
+            return $query->whereHas('categories', function (Builder $query) use ($categoryId) {
+                $query->whereIn('categories.id', $categoryId);
+            });
+        })->paginate(Lot::$paginate);
+    }
 }

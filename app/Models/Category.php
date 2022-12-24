@@ -72,6 +72,7 @@ class Category extends Model
     static public function destroyCategory(Category $category)
     {
         $message = 'Delete Failed';
+
         if ($category->canDeleteCategory()) {
             if ($category->delete() > 0) {
                 $message = 'Successfully Deleted';

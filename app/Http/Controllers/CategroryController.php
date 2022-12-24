@@ -22,7 +22,7 @@ class CategroryController extends Controller
     public function index()
     {
         return view('category.index', [
-            'categories' => Category::allCategories(Config::get('constants.db.paginate_categories.paginate_category_9'))
+            'categories' => Category::allCategories(Config::get('constants.db.paginate_categories.paginate_category_6'))
         ]);
     }
 
@@ -103,4 +103,5 @@ class CategroryController extends Controller
     {
         return redirect()->route('categories.index')->with('message', Category::destroyCategory($category));
     }
+
 }

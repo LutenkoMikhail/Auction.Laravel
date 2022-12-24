@@ -12,7 +12,10 @@
 
 
 ## Установка:
+
 ## Выполнить команду:
+- git clone https://github.com/LutenkoMikhail/Auction.Laravel
+- cd auction.laravel
 - composer install .
 - npm install .
 - Переименовать файл .env.example в файл .env и настроить подключение к базе данных и пр .
@@ -26,5 +29,7 @@
 #### Использованы :
 - Php 8
 - Laravel 9
+- Select2
+- jQuery
 - MySQL 8
 - Composer
