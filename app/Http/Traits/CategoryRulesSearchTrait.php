@@ -10,6 +10,6 @@ trait CategoryRulesSearchTrait
      * @var mixed
      */
     protected static $RULES = [
-        'category' => ['required', 'array'],
+        'category' => ['required', 'array', 'exists:Categories,id'],
     ];
 }
