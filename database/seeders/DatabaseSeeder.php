@@ -16,8 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Lot::factory(10)
-            ->has(Category::factory(rand(2, 4)))
-            ->create();
+        Category::factory(10)->has(Lot::factory(rand(1, 5)))->create();
     }
 }
