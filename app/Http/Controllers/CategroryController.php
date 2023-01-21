@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Services\Category\CategoryService;
+use App\Services\Lot\LotService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -15,6 +17,21 @@ class CategroryController extends Controller
 {
 
     /**
+     * Service Object type CategoryService
+     */
+    protected CategoryService $categoryService;
+
+    /**
+     * Сonstructor
+     *
+     * @param LotService $lotService
+     */
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return Application|Factory|View
@@ -22,7 +39,7 @@ class CategroryController extends Controller
     public function index()
     {
         return view('category.index', [
-            'categories' => Category::allCategories(Config::get('constants.db.paginate_categories.paginate_category_6'))
+            'categories' => $this->categoryService->allCategories(Config::get('constants.db.paginate_categories.paginate_category_6'))
         ]);
     }
 
@@ -46,7 +63,7 @@ class CategroryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        return redirect()->route('categories.index')->with('message', Category::newCategory($request));
+        return redirect()->route('categories.index')->with('message', $this->categoryService->newCategory($request));
     }
 
 
@@ -59,7 +76,7 @@ class CategroryController extends Controller
     public function show(Category $category)
     {
         return view('category.show', [
-            'category' => Category::oneCategory($category)
+            'category' => $this->categoryService->oneCategory($category)
         ]);
     }
 
@@ -89,7 +106,7 @@ class CategroryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        return redirect()->route('categories.index')->with('message', Category::updateCategory($request, $category));
+        return redirect()->route('categories.index')->with('message', $this->categoryService->updateCategory($request, $category));
     }
 
 
@@ -101,7 +118,7 @@ class CategroryController extends Controller
      */
     public function destroy(Category $category)
     {
-        return redirect()->route('categories.index')->with('message', Category::destroyCategory($category));
+        return redirect()->route('categories.index')->with('message', $this->categoryService->destroyCategory($category));
     }
 
 }

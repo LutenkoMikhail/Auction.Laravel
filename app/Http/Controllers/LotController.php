@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLotRequest;
 use App\Http\Requests\UpdateLotRequest;
-use App\Models\Category;
 use App\Models\Lot;
+use App\Services\Category\CategoryService;
 use App\Services\Lot\LotService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -21,13 +21,19 @@ class LotController extends Controller
     protected LotService $lotService;
 
     /**
+     * Service Object type CategoryService
+     */
+    protected CategoryService $categoryService;
+
+    /**
      * Сonstructor
      *
      * @param LotService $lotService
      */
-    public function __construct(LotService $lotService)
+    public function __construct(LotService $lotService,CategoryService $categoryService)
     {
         $this->lotService = $lotService;
+        $this->categoryService = $categoryService;
     }
 
 
@@ -40,7 +46,7 @@ class LotController extends Controller
     {
         return view('lot.index', [
             'lots' => $this->lotService->allLots(Config::get('constants.db.paginate_lots.paginate_lot_9')),
-            'categories' => Category::fullCategories(),
+            'categories' => $this->categoryService->fullCategories(),
         ]);
     }
 
@@ -53,7 +59,7 @@ class LotController extends Controller
     public function create()
     {
         return view('lot.create', [
-            'categories' => Category::fullCategories(),
+            'categories' =>  $this->categoryService->fullCategories(),
         ]);
     }
 
@@ -95,7 +101,7 @@ class LotController extends Controller
         return view('lot.edit',
             [
                 'lot' => $lot,
-                'categories' => Category::fullCategories(),
+                'categories' => $this->categoryService->fullCategories(),
             ]
         );
     }
