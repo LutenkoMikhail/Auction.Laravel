@@ -6,6 +6,7 @@ use App\Http\Requests\StoreLotRequest;
 use App\Http\Requests\UpdateLotRequest;
 use App\Models\Category;
 use App\Models\Lot;
+use App\Services\Lot\LotService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,6 +15,21 @@ use Illuminate\Support\Facades\Config;
 
 class LotController extends Controller
 {
+    /**
+     * Service Object type LotService
+     */
+    protected LotService $lotService;
+
+    /**
+     * Сonstructor
+     *
+     * @param LotService $lotService
+     */
+    public function __construct(LotService $lotService)
+    {
+        $this->lotService = $lotService;
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -23,7 +39,7 @@ class LotController extends Controller
     public function index()
     {
         return view('lot.index', [
-            'lots' => Lot::allLots(Config::get('constants.db.paginate_lots.paginate_lot_9')),
+            'lots' => $this->lotService->allLots(Config::get('constants.db.paginate_lots.paginate_lot_9')),
             'categories' => Category::fullCategories(),
         ]);
     }
@@ -50,7 +66,7 @@ class LotController extends Controller
      */
     public function store(StoreLotRequest $request)
     {
-        return redirect()->route('lots.index')->with('message', Lot::newLot($request));
+        return redirect()->route('lots.index')->with('message', $this->lotService->newLot($request));
     }
 
 
@@ -63,7 +79,7 @@ class LotController extends Controller
     public function show(Lot $lot)
     {
         return view('lot.show', [
-            'lot' => Lot::oneLot($lot)
+            'lot' => $this->lotService->oneLot($lot)
         ]);
     }
 
@@ -94,7 +110,7 @@ class LotController extends Controller
      */
     public function update(UpdateLotRequest $request, Lot $lot)
     {
-        return redirect()->route('lots.index')->with('message', Lot::updateLot($request, $lot));
+        return redirect()->route('lots.index')->with('message', $this->lotService->updateLot($request, $lot));
     }
 
 
@@ -106,7 +122,7 @@ class LotController extends Controller
      */
     public function destroy(Lot $lot)
     {
-        return redirect()->route('lots.index')->with('message', Lot::destroyLot($lot));
+        return redirect()->route('lots.index')->with('message', $this->lotService->destroyLot($lot));
     }
 
 }
