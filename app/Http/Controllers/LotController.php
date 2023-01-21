@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SearchCategoryRequest;
 use App\Http\Requests\StoreLotRequest;
 use App\Http\Requests\UpdateLotRequest;
 use App\Models\Category;
@@ -10,7 +9,6 @@ use App\Models\Lot;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Config;
 
@@ -111,27 +109,4 @@ class LotController extends Controller
         return redirect()->route('lots.index')->with('message', Lot::destroyLot($lot));
     }
 
-    /**
-     * Search the specified resource
-     *
-     * @param SearchCategoryRequest $request
-     * @return JsonResponse
-     */
-    public function search(SearchCategoryRequest $request)
-    {
-        $success = false;
-        $html = '';
-
-        if ($request->ajax()) {
-            if ($request->has('category')) {
-                $html = view('lot.ajax.card', [
-                    'lots' => Lot::searchLot($request->input('category'),
-                        Config::get('constants.db.paginate_lots.paginate_lot_9'))
-                ])->render();
-                $success = true;
-            }
-        }
-
-        return response()->json(array('success' => $success, 'html' => $html));
-    }
 }
